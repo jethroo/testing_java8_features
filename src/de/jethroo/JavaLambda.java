@@ -35,24 +35,20 @@ public class JavaLambda {
 		List<Person> roster = initializePersons();
 		// Lambda for filtering the list of persons
 		Predicate<Person> tester = p -> p.getGender() == Person.Sex.MALE
-		        && p.getAge() >= 18
-		        && p.getAge() <= 37;
+				&& p.getAge() >= 18 && p.getAge() <= 37;
 		// function which is applied to all found (not filtered) persons
-		Function<Person,String> function = p -> p.toString();
+		Function<Person, String> function = p -> p.toString();
 		// consumes the result of the function
 		Consumer<String> consumer = s -> System.out.println(s);
-		
+
 		processItems(roster, tester, function, consumer);
-		
+
 		// aggregate Operations via collection API
-		roster
-		  .stream()
-	      .filter(tester)
-	      .map(function)
-	      .forEach(consumer);
+		roster.stream().filter(tester).map(function).forEach(consumer);
 	}
 
-	public static <X,Y> void processItems(List<X> roster, Predicate<X> tester, Function<X, Y> function, Consumer<Y> consumer) {
+	public static <X, Y> void processItems(List<X> roster, Predicate<X> tester,
+			Function<X, Y> function, Consumer<Y> consumer) {
 		for (X p : roster) {
 			if (tester.test(p)) {
 				consumer.accept(function.apply(p));
@@ -60,7 +56,6 @@ public class JavaLambda {
 		}
 	}
 }
-
 
 class Person {
 	public enum Sex {
@@ -73,8 +68,9 @@ class Person {
 	String emailAddress;
 
 	public int getAge() {
-		if (birthday != null){
-			return (int)Math.abs(ChronoUnit.YEARS.between(birthday,LocalDate.now()));
+		if (birthday != null) {
+			return (int) Math.abs(ChronoUnit.YEARS.between(birthday,
+					LocalDate.now()));
 		} else {
 			return -1;
 		}
@@ -113,7 +109,7 @@ class Person {
 	}
 
 	public String toString() {
-		return String.format("Name: %s, Age: %s, Gender: %s, Email: %s", name, getAge(), gender, emailAddress);
+		return String.format("Name: %s, Age: %s, Gender: %s, Email: %s", name,
+				getAge(), gender, emailAddress);
 	}
 }
-
