@@ -19,6 +19,7 @@ public class JavaLambda {
 		p1.setBirthday(LocalDate.of(1979, 11, 12));
 		p1.setName("Carsten Wirth");
 		p1.setGender(Sex.MALE);
+		p1.setEmailAddress("cwirth79@web.de");
 
 		Person p2 = new Person();
 		p2.setBirthday(LocalDate.of(1986, 6, 22));
@@ -42,6 +43,13 @@ public class JavaLambda {
 		Consumer<String> consumer = s -> System.out.println(s);
 		
 		processItems(roster, tester, function, consumer);
+		
+		// aggregate Operations via collection API
+		roster
+		  .stream()
+	      .filter(tester)
+	      .map(function)
+	      .forEach(consumer);
 	}
 
 	public static <X,Y> void processItems(List<X> roster, Predicate<X> tester, Function<X, Y> function, Consumer<Y> consumer) {
